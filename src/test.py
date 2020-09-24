@@ -1,15 +1,43 @@
-from __init__ import Perceptron
+import pp
 
-import tests.main
+from Perceptron import Perceptron
 
-def main():
-  tests.main.test(Perceptron(
-    mode = 'feedback',
-    hidden_layers = (4,3),
-    c = 0.01,
-    epochs = 200,
-    randSeed = 123
-  ))
+class TestPerceptron:
+
+  def __init__(self):
+    print('\n\nInit:')
+    self.predictor = Perceptron(
+      mode = 'feedback',
+      hidden_layers = (2, 2),
+      c = 0.1,
+      epochs = 200,
+      seed = 123
+    )
+    pp(vars(self.predictor))
+
+  def test_train(self):
+    print('\n\nTraining:')
+    self.predictor.train([
+      [0, 0],
+      [1, 1],
+      [0, 1],
+      [1, 0]
+    ], ['hi', 'bye', 'hi', 'bye'])
+    pp(vars(self.predictor))
+
+  def test_predict(self):
+    print('\n\nPrediction:')
+    pp(self.predictor.predict([
+      [0, 0],
+      [1, 1],
+      [0, 1],
+      [1, 0]
+    ]))
+
+  def runall(self):
+    self.test_train()
+    self.test_predict()
 
 if __name__ == '__main__':
-  main()
+  test = TestPerceptron()
+  test.runall()
